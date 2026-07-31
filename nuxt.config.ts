@@ -1,10 +1,11 @@
 // nuxt.config.ts
 export default defineNuxtConfig({
-   compatibilityDate: '2025-07-15',
+  compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/supabase',
-            '@nuxtjs/tailwindcss' 
-           ],
+  modules: [
+    '@nuxtjs/supabase',
+    '@nuxtjs/tailwindcss' 
+  ],
   css: ['~/assets/css/tailwind.css'], 
   supabase: {
     redirectOptions: {
@@ -15,10 +16,15 @@ export default defineNuxtConfig({
       cookieRedirect: false,
     },
   },
+  
+  // --- AGREGAMOS ESTAS SECCIONES ---
+  build: {
+    transpile: ['tslib', '@supabase/supabase-js']
+  },
+  
   nitro: {
     routeRules: {
-      '/': { redirect: '/login' } // Esto redirige automáticamente
+      '/': { redirect: '/login' }
     }
   }
-
 })
