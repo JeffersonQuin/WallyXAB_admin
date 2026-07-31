@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/supabase": "^2.0.9",
     "nuxt": "^4.5.1",
+    "tslib": "^2.8.1",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0"
   },

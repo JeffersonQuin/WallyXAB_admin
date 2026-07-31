@@ -17,17 +17,29 @@ export default defineNuxtConfig({
     },
   },
 
-  // Corrige la compilación de tslib y Supabase para el navegador/servidor local
+  // Ajustes de compilación global
   build: {
-    transpile: ['tslib', '@supabase/supabase-js', '@nuxtjs/supabase']
+    transpile: [
+      'tslib', 
+      '@supabase/supabase-js', 
+      '@nuxtjs/supabase',
+      '@supabase/postgrest-js',
+      '@supabase/gotrue-js',
+      '@supabase/functions-js',
+      '@supabase/storage-js'
+    ]
   },
 
+  // Configuración del servidor Nitro para Vercel
   nitro: {
-    // Evita forzar el 'inline' de estas librerías viejas en producción
-    esmExternals: 'loose',
+    esmExternals: true, // Fuerza soporte estricto ESM para módulos externos
     externals: {
-      // Dejar vacío previene el error de desestructuración de __extends en Vercel
-      inline: [] 
+      inline: [], // Mantenlo vacío para no empaquetar código problemático dentro de las funciones lambda
+      external: [
+        'tslib',
+        '@supabase/supabase-js',
+        '@nuxtjs/supabase'
+      ]
     },
     routeRules: {
       '/': { redirect: '/login' }
