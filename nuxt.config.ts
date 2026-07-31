@@ -17,16 +17,17 @@ export default defineNuxtConfig({
     },
   },
 
-  // Ajuste para corregir el conflicto de CommonJS / ESM con Supabase y tslib
-  vite: {
-    optimizeDeps: {
-      include: ['tslib', '@supabase/supabase-js']
-    }
+  // Corrige la compilación de tslib y Supabase para el navegador/servidor local
+  build: {
+    transpile: ['tslib', '@supabase/supabase-js', '@nuxtjs/supabase']
   },
 
   nitro: {
+    // Evita forzar el 'inline' de estas librerías viejas en producción
+    esmExternals: 'loose',
     externals: {
-      inline: ['tslib', '@supabase/supabase-js', '@nuxtjs/supabase']
+      // Dejar vacío previene el error de desestructuración de __extends en Vercel
+      inline: [] 
     },
     routeRules: {
       '/': { redirect: '/login' }
