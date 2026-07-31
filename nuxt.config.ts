@@ -16,13 +16,18 @@ export default defineNuxtConfig({
       cookieRedirect: false,
     },
   },
-  
-  // --- AGREGAMOS ESTAS SECCIONES ---
-  build: {
-    transpile: ['tslib', '@supabase/supabase-js']
+
+  // Ajuste para corregir el conflicto de CommonJS / ESM con Supabase y tslib
+  vite: {
+    optimizeDeps: {
+      include: ['tslib', '@supabase/supabase-js']
+    }
   },
-  
+
   nitro: {
+    externals: {
+      inline: ['tslib', '@supabase/supabase-js', '@nuxtjs/supabase']
+    },
     routeRules: {
       '/': { redirect: '/login' }
     }
