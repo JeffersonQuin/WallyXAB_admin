@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
 
-  // Ajustes de compilación global
+  // Mantenemos esto porque ayudó a resolver el error de compilación local
   build: {
     transpile: [
       'tslib', 
@@ -30,17 +30,9 @@ export default defineNuxtConfig({
     ]
   },
 
-  // Configuración del servidor Nitro para Vercel
+  // Simplificamos Nitro eliminando la restricción de 'external' para Vercel
   nitro: {
-    esmExternals: true, // Fuerza soporte estricto ESM para módulos externos
-    externals: {
-      inline: [], // Mantenlo vacío para no empaquetar código problemático dentro de las funciones lambda
-      external: [
-        'tslib',
-        '@supabase/supabase-js',
-        '@nuxtjs/supabase'
-      ]
-    },
+    esmExternals: 'loose', // Permite mayor flexibilidad con librerías CommonJS antiguas
     routeRules: {
       '/': { redirect: '/login' }
     }
