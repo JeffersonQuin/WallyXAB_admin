@@ -128,6 +128,9 @@ const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 const route = useRoute()
 
+// Sidebar toggle
+const { toggleSidebar } = useSidebar()
+
 // Estado
 const mostrarNotificaciones = ref(false)
 const notificaciones = ref([])

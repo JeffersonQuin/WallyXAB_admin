@@ -1,5 +1,8 @@
 <template>
-  <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-indigo-900 to-purple-900 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
+  <aside
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-indigo-900 to-purple-900 transform transition-transform duration-300 ease-in-out lg:translate-x-0"
+    :class="sidebarAbierto ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+  >
     <!-- Logo -->
     <div class="flex items-center gap-3 px-6 py-4 border-b border-white/10">
       <div class="bg-white/10 rounded-xl p-2">
@@ -76,7 +79,7 @@
 
     <!-- Botón mobile para cerrar sidebar -->
     <button 
-      @click="$emit('close')" 
+      @click="cerrarSidebar" 
       class="absolute top-4 right-4 text-white lg:hidden"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,7 +91,15 @@
 
 <script setup>
 const supabase = useSupabaseClient()
+const route = useRoute()
 const reservasCount = ref(0)
+
+const { sidebarAbierto, cerrarSidebar } = useSidebar()
+
+// Cerrar sidebar automáticamente al navegar (mobile)
+watch(() => route.path, () => {
+  cerrarSidebar()
+})
 
 const logout = async () => {
   await supabase.auth.signOut()
